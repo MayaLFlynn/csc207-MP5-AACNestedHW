@@ -1,9 +1,9 @@
 package structures;
 /**
- * Exceptions that indicate that a key is not in an associative array
+ * Exception indicates that an imageLoc cannot be found in the expected area. 
  * (dictionary, map, etc.).
  *
- * @author Samuel A. Rebelsky
+ * 
  */
 public class ElementNotFoundException extends Exception{
   /**
