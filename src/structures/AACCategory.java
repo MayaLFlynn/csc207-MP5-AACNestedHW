@@ -1,6 +1,8 @@
 package structures;
 
 import structures.AssociativeArrayStruct.AssociativeArray;
+import structures.AssociativeArrayStruct.KeyNotFoundException;
+import structures.AssociativeArrayStruct.NullKeyException;
 
 /**
  * Represents the mappings for a single page of items to be displayed
@@ -22,7 +24,8 @@ public class AACCategory {
    */
   public AACCategory(java.lang.String name) {
     this.name = name;
-  } // 
+    this.category = new AssociativeArray<String, String>();
+  } // AACategory
 
   /**
    * Adds the mapping of the imageLoc to the category
@@ -31,7 +34,10 @@ public class AACCategory {
    * @param text
    */
   public void addItem(java.lang.String imageLoc, java.lang.String text) {
-    // STUB
+    try {
+      this.category.set(imageLoc, text);
+    } catch (NullKeyException e) {
+    } // does nothing with a null key
   } // addItem(java.lang.String, java.lang.String)
 
 
@@ -39,7 +45,7 @@ public class AACCategory {
    * Returns the name of the category
    */
   public java.lang.String getCategory() {
-    return ""; // STUB
+    return this.name;
   } // getCategory()
 
 
@@ -47,8 +53,11 @@ public class AACCategory {
    * Returns an array of all of the images in the category
    */
   public java.lang.String[] getImages() {
-    java.lang.String[] images = {"", ""};
-    return images; // STUB
+    java.lang.String[] images = new String[category.size()];
+    for (int i = 0; i < category.size(); i++) {
+      images[i] = category.grabKey(i);
+    }
+    return images;
   } // getImages()
 
 
@@ -57,8 +66,12 @@ public class AACCategory {
    * 
    * @param imageLoc
    */
-  public java.lang.String getText(java.lang.String imageLoc) {
-    return ""; // STUB
+  public java.lang.String getText(java.lang.String imageLoc) throws ElementNotFoundException {
+    try {
+      return category.get(imageLoc);
+    } catch (KeyNotFoundException e) {
+      throw new ElementNotFoundException();
+    }
   } // getText()
 
 
@@ -68,6 +81,6 @@ public class AACCategory {
    * @param imageLoc
    */
   public boolean hasImage(java.lang.String imageLoc) {
-    return false; // STUB
+    return category.hasKey(imageLoc);
   } // hasImage()
 } // class AACCategory
